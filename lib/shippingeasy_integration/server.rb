@@ -192,9 +192,15 @@ to Shipping Easy."
       @config['vendor']
     end
 
+    def try_rewrite(log)
+      return unless log.include?('Order has already shipped')
+      'Order has already shipped and cannot be edited or canceled.'
+    end
+
     def parsed_message(message)
-      JSON.parse(message)['errors'].map { |m| m['message'] }.join(' ')
-    rescue
+      log = JSON.parse(message)['errors'].map { |m| m['message'] }.join(' ')
+      try_rewrite(log)
+    rescue StandardError
       message
     end
 
