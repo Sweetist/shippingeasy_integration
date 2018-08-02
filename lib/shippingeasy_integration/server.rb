@@ -193,7 +193,7 @@ to Shipping Easy."
     end
 
     def try_rewrite(log)
-      return unless log.include?('Order has already shipped')
+      return log unless log.include?('Order has already shipped')
       'Order has already shipped and cannot be edited or canceled.'
     end
 
